@@ -14,7 +14,7 @@
 // @grant        none
 // ==/UserScript==
 
-(function () {
+(() => {
 
   'use strict';
 
@@ -44,13 +44,13 @@
           || document.querySelector('#YUIDDb [role="link"]')
           || document.querySelector('#YUIDDb');
         if (el && /dark theme:\s*off/i.test(el.textContent || el.closest('#YUIDDb')?.textContent || '')) {
-          forceClick(el); //el.click();
+          forceClick(el);
           return true;
         }
         el = [...document.querySelectorAll('[jsaction*="ok5gFc"], [role="menuitem"], [role="link"]')]
           .find(e => /dark theme:\s*off/i.test(e.textContent));
         if (el) {
-          forceClick(el); //el.click();
+          forceClick(el);
           return true;
         }
         return false;
@@ -71,13 +71,19 @@
       }, INTERVAL_MS);
 
       const observer = new MutationObserver(() => {
+        if (isAlreadyDark()) {
+          observer.disconnect();
+          clearInterval(timer);
+          return;
+        }
+        const darkThemeMenu = document.querySelector('#YUIDDb');
+        if (!darkThemeMenu) return;
         if (tryForceDark()) {
           observer.disconnect();
           clearInterval(timer);
         }
       });
 
-      observer.observe(document.documentElement, { childList: true, subtree: true });
     })();
   }
 
