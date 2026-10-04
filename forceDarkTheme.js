@@ -19,14 +19,14 @@
   'use strict';
 
   // Enable forcing of Google Dark Theme On ==============================================
-  const enableGoogleDarkTheme = true; // 1 OR true, 0 OR false
+  const ENABLE_DARK_THEME_ON = true; // 1 OR true, 0 OR false
   // =====================================================================================
 
   const LOG = '🌙 [Force Dark Theme]';
   const MAX_ATTEMPTS = 40;
   const INTERVAL_MS = 200;
 
-  if (enableGoogleDarkTheme) {
+  if (ENABLE_DARK_THEME_ON) {
     (function forceGoogleDarkTheme() {
 
       function isAlreadyDark() {
@@ -83,7 +83,6 @@
           clearInterval(timer);
         }
       });
-
     })();
   }
 
